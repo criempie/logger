@@ -6,6 +6,8 @@ export class Logger {
 
     private readonly _location_value: string;
 
+    public static debugEnabled = false;
+
     protected get _location(): string {
         return this._location_value;
     }
@@ -47,6 +49,12 @@ export class Logger {
 
     public warning(...messages: any): void {
         Logger._log(this._fullLocation, messages, Logger._chalk.yellow);
+    }
+
+    public debug(...messages: any): void {
+        if (Logger.debugEnabled) {
+            Logger._log(this._fullLocation, messages, Logger._chalk.blueBright);
+        }
     }
 
     protected static _log(locations: string | string[], messages: any, colorFn?: ChalkFunction): void {
